@@ -1,0 +1,97 @@
+local M = {}
+
+local lines = {
+  "",
+  "════════════ GENERAL ════════════",
+  "Q                : record macro",
+  "<Space><Esc>     : clear search highlight",
+  "sudo save        : :w !sudo tee %",
+  "",
+  "══════════ TELESCOPE / FILES ══════════",
+  "<leader>ff       : find files",
+  "<leader>fg       : live grep",
+  "<leader>fr       : buffers",
+  "<leader>fh       : help tags",
+  "<leader>f        : file browser (cwd)",
+  "<leader>f.       : file browser (file dir)",
+  "<leader>ll       : lua config files",
+  "",
+  "════════════ PYTHON ════════════",
+  "<leader>r        : run python file",
+  "",
+  "════════════ TRANSLATOR ════════════",
+  "<leader>t        : traslate text",
+  "",
+
+  "════════════ COMMENTS ════════════",
+  "gcc              : toggle comment (line)",
+  "gc{motion}       : toggle comment by motion",
+  "gcj              : comment this + next line",
+  "gcip             : comment inner paragraph",
+  "Visual + gc      : comment selection",
+  "",
+  "════════ PRINT MANY LINES ════════",
+  "v <leader>i      : print at line start",
+  "v <leader>a      : print at line end",
+  "",
+  "════════════ DAP ════════════",
+  "<F5>             : toggle breakpoint",
+  "<F6>             : continue",
+  "<F2>             : step over",
+  "<F3>             : step into",
+  "<F4>             : step out",
+  "<F7>             : terminate",
+  "",
+  "════════════ BUFFERS ════════════",
+  "t'               : next buffer",
+  "tr               : previous buffer",
+  "tc               : close buffer",
+  "",
+  "════════════ FOLDS ════════════",
+  "<leader>zf       : create fold",
+  "<leader>z        : toggle fold",
+  "<leader>za       : toggle ALL folds",
+  "<leader>zx       : delete fold",
+  "",
+  "════════════ NVIM ════════════",
+  "<leader>ev       : edit init.vim",
+  "<leader>sv       : source init.vim",
+  "",
+}
+
+function M.show()
+  local buf = vim.api.nvim_create_buf(false, true)
+
+  -- вставляем текст
+  vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+
+  -- считаем ширину динамически
+  local width = 0
+  for _, line in ipairs(lines) do
+    width = math.max(width, #line)
+  end
+  width = width + 4
+
+  local height = #lines
+
+  local ui = vim.api.nvim_list_uis()[1]
+  local row = math.floor((ui.height - height) / 2)
+  local col = math.floor((ui.width - width) / 2)
+
+  vim.api.nvim_open_win(buf, true, {
+    relative = "editor",
+    width = width,
+    height = height,
+    row = row,
+    col = col,
+    style = "minimal",
+    border = "rounded",
+  })
+
+  -- закрытие
+  vim.keymap.set("n", "q", "<cmd>close<CR>", { buffer = buf, silent = true })
+  vim.keymap.set("n", "<Esc>", "<cmd>close<CR>", { buffer = buf, silent = true })
+end
+
+return M
+

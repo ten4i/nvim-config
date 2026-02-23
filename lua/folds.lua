@@ -1,0 +1,45 @@
+# ============================================================
+# LINTER FORMATTERS
+# ============================================================
+# foldmethod=marker
+# ============================================================
+
+# {{{ format_linter_error
+def format_linter_error(error: dict) -> dict:
+    """
+    Convert single flake8 error to unified format.
+    """
+    return {
+        "line": error["line_number"],
+        "column": error["column_number"],
+        "message": error["text"],
+        "name": error["code"],
+        "source": "flake8",
+    }
+# }}}
+
+
+# {{{ format_single_linter_file
+def format_single_linter_file(file_path: str, errors: list) -> dict:
+    """
+    Format linter result for a single file.
+    """
+    return {
+        "path": file_path,
+        "status": "failed" if errors else "passed",
+        "errors": [format_linter_error(err) for err in errors],
+    }
+# }}}
+
+
+# {{{ format_linter_report
+def format_linter_report(linter_report: dict) -> list:
+    """
+    Format full linter report.
+    """
+    return [
+        format_single_linter_file(file_path, errors)
+        for file_path, errors in linter_report.items()
+    ]
+# }}}
+
