@@ -117,6 +117,7 @@ Plug 'plasticboy/vim-markdown'
 Plug 'windwp/nvim-autopairs'
 Plug 'nvim-tree/nvim-web-devicons'
 Plug 'romgrk/barbar.nvim'
+Plug 'Yggdroot/indentLine'
 call plug#end()
 
 " HOTKEYS
