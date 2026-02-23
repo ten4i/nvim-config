@@ -3,6 +3,7 @@ lua << EOF
 vim.deprecate = function() end
 EOF
 
+" sets, mapleader, filetypes
 let g:netrw_banner = 0
 set guicursor=a:block
 set spelllang=ru
@@ -42,7 +43,7 @@ syntax on
 let mapleader = " "
 source ~/.config/nvim/macros.vim
 
-" --- Case-insensitive commands for save/quit ---
+" Case-insensitive commands for save/quit
 command! W  w
 command! Q  q
 command! Wq wq
@@ -53,7 +54,7 @@ command! Qa qa
 command! QA qa
 
 
-" нормальный каталог для views
+" Dir for views
 set viewdir=~/.local/state/nvim/view//
 silent! call mkdir(&viewdir, 'p')
 
@@ -66,10 +67,7 @@ augroup PersistFolds
 augroup END
 
 
-" =========================
 " MACROS
-" =========================
-
 function! SaveMacro()
   let r = nr2char(getchar())
   if empty(eval('@' . r))
@@ -80,6 +78,7 @@ function! SaveMacro()
 endfunction
 
 " =========================
+
 " INDENTLINE
 " =========================
 let g:indentLine_char = '│'
@@ -120,9 +119,7 @@ Plug 'nvim-tree/nvim-web-devicons'
 Plug 'romgrk/barbar.nvim'
 call plug#end()
 
-" =========================
 " HOTKEYS
-" =========================
 " splits
 nnoremap <silent> <C-h> <C-w>h
 nnoremap <silent> <C-j> <C-w>j
@@ -133,17 +130,15 @@ nnoremap <M-h> :vertical resize -2<CR>
 nnoremap <M-l> :vertical resize +2<CR>
 nnoremap <M-j> :resize +2<CR>
 nnoremap <M-k> :resize -2<CR>
-
 " rotation
 nnoremap <leader>w <C-w> 
-
+" remap q
 nnoremap Q q
 nnoremap q <nop>
 " python
 nnoremap <leader>r :!python3 %<CR>
 " cancel highlight
 nnoremap <space><esc> :nohlsearch<CR>
-
 " debug (DAP)
 nnoremap <F5> :lua require'dap'.toggle_breakpoint()<CR>
 nnoremap <F6> :lua require'dap'.continue()<CR>
@@ -151,19 +146,16 @@ nnoremap <F2> :lua require'dap'.step_over()<CR>
 nnoremap <F3> :lua require'dap'.step_into()<CR>
 nnoremap <F4> :lua require'dap'.step_out()<CR>
 nnoremap <F7> :lua require'dap'.terminate()<CR>
-
 " Telescope smart layout
 nnoremap <silent> <C-f> :lua require("telescope_layouts").find_files()<CR>
 nnoremap <silent> <leader>fr :lua require("telescope_layouts").buffers()<CR>
 nnoremap <silent> <leader>fh :lua require('telescope.builtin').help_tags()<CR>
 nnoremap <silent> <C-b> :lua require("telescope_layouts").file_browser()<CR>
 nnoremap <silent> <leader>f. :Telescope file_browser path=%:p:h select_buffer=true<CR>
-
 " buffers (barbar)
 nnoremap t' :BufferNext<CR>
 nnoremap tr :BufferPrevious<CR>
 nnoremap tc :BufferClose<CR>
-
 " clipboard
 vmap <C-c> "+y<Esc>i
 vmap <C-x> "+d<Esc>i
@@ -173,46 +165,37 @@ inoremap <C-a> <Esc>ggVG
 vnoremap <C-a> <Esc>ggVG
 xnoremap <C-a> <Esc>ggVG
 tnoremap <C-a> <Esc>ggVG
-
 " yank / paste system
 noremap <Leader>y "+y
 noremap <Leader>p "+p
 noremap <Leader>Y "*y
 noremap <Leader>P "*p
-
 " MYVIMRC
 nnoremap <C-e> :e $MYVIMRC<CR>
 nnoremap <leader>sv :source $MYVIMRC<CR>
-
 " lua from telescope
 nnoremap <leader>ll :lua require("telescope.builtin").find_files({
       \ cwd = vim.fn.stdpath("config") .. "/lua",
       \ prompt_title = "Lua config",
       \ })<CR>
-
-" создать fold
+" folds creating
 nnoremap <silent> <leader>zf zf
 vnoremap <silent> <leader>zf zf
-
 nnoremap <silent> <leader>z za
 nnoremap <silent> <leader>Z :if &foldlevel == 0 \| execute "normal! zR" \| else \| execute "normal! zM" \| endif<CR>
 nnoremap <silent> <leader>zx :silent! normal! zd<CR>
-
+"showhotkeys
 nnoremap <leader>h :lua require("show_hotkeys").show()<CR>
-
-" " NORMAL — translate word
-" nnoremap <leader>t :!trans -no-ansi -b <cword> -t ru<CR>
-
-" " VISUAL — translate selection
-" vnoremap <leader>t y:!trans -no-ansi -b "<C-r>"" -t ru<CR>
-
+"translate
 nnoremap <leader>t :lua require("translator").translate_word()<CR>
 vnoremap <leader>t :lua require("translator").translate_visual()<CR>
+
 
 
 " =========================
 " STARTUP LUA
 " =========================
+
 lua << EOF
 require("lsp_setup")
 require('nvim-autopairs').setup({})
