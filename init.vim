@@ -80,7 +80,6 @@ endfunction
 " =========================
 
 " INDENTLINE
-" =========================
 let g:indentLine_char = '│'
 let g:indentLine_fileTypeExclude = ['help', 'startify', 'dashboard', 'packer', 'neogitstatus']
 
@@ -121,6 +120,9 @@ Plug 'Yggdroot/indentLine'
 call plug#end()
 
 " HOTKEYS
+"swap lines
+nnoremap J :m .+1<CR>==
+nnoremap K :m .-2<CR>==
 " splits
 nnoremap <silent> <C-h> <C-w>h
 nnoremap <silent> <C-j> <C-w>j
@@ -148,11 +150,12 @@ nnoremap <F3> :lua require'dap'.step_into()<CR>
 nnoremap <F4> :lua require'dap'.step_out()<CR>
 nnoremap <F7> :lua require'dap'.terminate()<CR>
 " Telescope smart layout
-nnoremap <silent> <C-f> :lua require("telescope_layouts").find_files()<CR>
+nnoremap <silent> <leader>ff :lua require("telescope_layouts").find_files()<CR>
 nnoremap <silent> <leader>fr :lua require("telescope_layouts").buffers()<CR>
 nnoremap <silent> <leader>fh :lua require('telescope.builtin').help_tags()<CR>
-nnoremap <silent> <C-b> :lua require("telescope_layouts").file_browser()<CR>
+nnoremap <silent> <leader>f :lua require("telescope_layouts").file_browser()<CR>
 nnoremap <silent> <leader>f. :Telescope file_browser path=%:p:h select_buffer=true<CR>
+nnoremap <silent> <leader>fg :Telescope live_grep<CR>
 " buffers (barbar)
 nnoremap t' :BufferNext<CR>
 nnoremap tr :BufferPrevious<CR>
