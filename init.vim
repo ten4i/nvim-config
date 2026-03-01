@@ -117,12 +117,13 @@ Plug 'windwp/nvim-autopairs'
 Plug 'nvim-tree/nvim-web-devicons'
 Plug 'romgrk/barbar.nvim'
 Plug 'Yggdroot/indentLine'
+Plug 'stevearc/conform.nvim'
 call plug#end()
 
 " HOTKEYS
-"swap lines
-nnoremap J :m .+1<CR>==
-nnoremap K :m .-2<CR>==
+" Move line up/down with Shift+Arrow
+nnoremap <S-Up> :m .-2<CR>==
+nnoremap <S-Down> :m .+1<CR>==
 " splits
 nnoremap <silent> <C-h> <C-w>h
 nnoremap <silent> <C-j> <C-w>j
@@ -149,11 +150,12 @@ nnoremap <F2> :lua require'dap'.step_over()<CR>
 nnoremap <F3> :lua require'dap'.step_into()<CR>
 nnoremap <F4> :lua require'dap'.step_out()<CR>
 nnoremap <F7> :lua require'dap'.terminate()<CR>
+
 " Telescope smart layout
+nnoremap <silent> <leader>fb :lua require("telescope_layouts").file_browser()<CR>
 nnoremap <silent> <leader>ff :lua require("telescope_layouts").find_files()<CR>
 nnoremap <silent> <leader>fr :lua require("telescope_layouts").buffers()<CR>
 nnoremap <silent> <leader>fh :lua require('telescope.builtin').help_tags()<CR>
-nnoremap <silent> <leader>f :lua require("telescope_layouts").file_browser()<CR>
 nnoremap <silent> <leader>f. :Telescope file_browser path=%:p:h select_buffer=true<CR>
 nnoremap <silent> <leader>fg :Telescope live_grep<CR>
 " buffers (barbar)
@@ -174,9 +176,7 @@ noremap <Leader>y "+y
 noremap <Leader>p "+p
 noremap <Leader>Y "*y
 noremap <Leader>P "*p
-" MYVIMRC
-nnoremap <C-e> :e $MYVIMRC<CR>
-nnoremap <leader>sv :source $MYVIMRC<CR>
+
 " lua from telescope
 nnoremap <leader>ll :lua require("telescope.builtin").find_files({
       \ cwd = vim.fn.stdpath("config") .. "/lua",
@@ -193,7 +193,7 @@ nnoremap <leader>h :lua require("show_hotkeys").show()<CR>
 "translate
 nnoremap <leader>t :lua require("translator").translate_word()<CR>
 vnoremap <leader>t :lua require("translator").translate_visual()<CR>
-
+nnoremap <leader>bb :lua require("conform").format()<CR>
 
 
 " =========================
@@ -203,6 +203,7 @@ vnoremap <leader>t :lua require("translator").translate_visual()<CR>
 lua << EOF
 require("lsp_setup")
 require('nvim-autopairs').setup({})
+require("conform_setup")
 
 pcall(require, "macros")
 pcall(require, "lines")
