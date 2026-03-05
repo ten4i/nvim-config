@@ -29,9 +29,9 @@ if is_light then
     visual = { a = { bg = "#957fb8", fg = "#1f1f28", gui = "bold" } },
     replace = { a = { bg = "#e46876", fg = "#1f1f28", gui = "bold" } },
     inactive = {
-      a = { bg = "NONE", fg = "#a0a0a0" },
-      b = { bg = "NONE", fg = "#a0a0a0" },
-      c = { bg = "NONE", fg = "#a0a0a0" },
+      a = { bg = "NONE", fg = "#9A9996" },
+      b = { bg = "NONE", fg = "#9A9996" },
+      c = { bg = "NONE", fg = "#9A9996" },
     },
   }
 

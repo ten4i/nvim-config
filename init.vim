@@ -5,9 +5,9 @@ EOF
 
 " sets, mapleader, filetypes
 let g:netrw_banner = 0
-" set guicursor=a:block
+set guicursor=a:block
 set spelllang=ru
-" set cursorline
+set cursorline
 set mouse=a
 set encoding=utf-8
 " set relativenumber
@@ -102,7 +102,6 @@ Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'L3MON4D3/luaSnip'
-Plug 'Shatur/neovim-ayu'
 Plug 'tpope/vim-commentary'
 Plug 'mfussenegger/nvim-dap'
 Plug 'rcarriga/nvim-dap-ui'
@@ -120,6 +119,7 @@ Plug 'webhooked/kanso.nvim'
 Plug 'sjl/badwolf'
 Plug 'yankcrime/direwolf'
 Plug 'pgdouyon/vim-yin-yang'
+Plug 'sphamba/smear-cursor.nvim'
 call plug#end()
 
 " HOTKEYS
