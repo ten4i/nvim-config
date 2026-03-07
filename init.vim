@@ -2,7 +2,6 @@
 lua << EOF
 vim.deprecate = function() end
 EOF
-
 " sets, mapleader, filetypes
 let g:netrw_banner = 0
 set guicursor=a:block
@@ -44,6 +43,8 @@ syntax on
 let mapleader = " "
 source ~/.config/nvim/macros.vim
 
+
+
 " Case-insensitive commands for save/quit
 command! W  w
 command! Q  q
@@ -79,7 +80,6 @@ function! SaveMacro()
 endfunction
 
 " =========================
-
 " INDENTLINE
 let g:indentLine_char = '│'
 let g:indentLine_fileTypeExclude = ['help', 'startify', 'dashboard', 'packer', 'neogitstatus']
@@ -87,6 +87,7 @@ let g:indentLine_fileTypeExclude = ['help', 'startify', 'dashboard', 'packer', '
 " =========================
 " PLUGINS
 " =========================
+
 call plug#begin('~/.config/nvim/plugged')
 
 
@@ -120,9 +121,16 @@ Plug 'sjl/badwolf'
 Plug 'yankcrime/direwolf'
 Plug 'pgdouyon/vim-yin-yang'
 Plug 'sphamba/smear-cursor.nvim'
+
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'stevearc/vim-arduino'
+
 call plug#end()
 
+" =========================
 " HOTKEYS
+" =========================
+
 
 " $MYVIMRC
 nnoremap <leader>ev :e $MYVIMRC<CR>
@@ -199,6 +207,32 @@ nnoremap <leader>t :lua require("translator").translate_word()<CR>
 vnoremap <leader>t :lua require("translator").translate_visual()<CR>
 nnoremap <leader>bb :lua require("conform").format()<CR>
 
+" move line up
+nnoremap <S-Up> :m .-2<CR>==
+
+" move line down
+nnoremap <S-Down> :m .+1<CR>==
+
+" move selected block up
+vnoremap <S-Up> :m '<-2<CR>gv=gv
+
+" move selected block down
+vnoremap <S-Down> :m '>+1<CR>gv=gv
+
+" ARDUINO
+lua << EOF
+local arduino = require("arduino")
+local esp32 = require("esp32")
+
+-- Arduino
+vim.keymap.set("n","<leader>s", arduino.serial)
+vim.keymap.set("n","<leader>S", arduino.serial_restart)
+vim.keymap.set("n","<leader>c", arduino.sync)
+-- ESP32
+vim.keymap.set("n","<leader>d", esp32.upload)
+vim.keymap.set("n","<leader>m", esp32.monitor)
+
+EOF
 
 " =========================
 " STARTUP LUA
@@ -209,14 +243,18 @@ require("lsp_setup")
 require('nvim-autopairs').setup({})
 require("conform_setup")
 
-pcall(require, "macros")
+pcall(require, "theme_changer")
 pcall(require, "lines")
 pcall(require, "nvim-dap")
 pcall(require, "signcolumn")
 pcall(require, "autocomplete")
-pcall(require, "theme_changer")
 pcall(require, "show_hotkeys")
+pcall(require, "macros")
 pcall(require, "translator")
+
+-- arduino
+pcall(require, "esp32")
+require("arduino")
 
 require("telescope").setup({
   extensions = {
@@ -231,3 +269,9 @@ require("telescope").setup({
 
 require("telescope").load_extension("file_browser")
 EOF
+
+
+augroup arduino_cpp
+  autocmd!
+  autocmd FileType arduino setlocal filetype=cpp
+augroup END

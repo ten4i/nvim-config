@@ -1,5 +1,5 @@
 -- =========================================================
--- Detect GNOME system theme (light / dark)
+-- Detect GNOME system theme
 -- =========================================================
 local function get_system_theme()
 
@@ -30,7 +30,7 @@ end
 -- =========================================================
 -- Transparent background
 -- =========================================================
-local function set_transparency()
+local function transparent()
 
   local groups = {
     "Normal",
@@ -47,54 +47,15 @@ local function set_transparency()
     "WinSeparator",
   }
 
-  for _, group in ipairs(groups) do
-    vim.api.nvim_set_hl(0, group, { bg = "NONE" })
+  for _, g in ipairs(groups) do
+    vim.api.nvim_set_hl(0, g, { bg = "NONE" })
   end
 
 end
 
 
 -- =========================================================
--- Cursorline + line numbers
--- =========================================================
-
-local function set_cursor_ui()
-
-  vim.opt.cursorline = true
-
-  -- line numbers
-  vim.api.nvim_set_hl(0, "LineNr", { fg = "#6e6e6e", bg = "NONE" })
-
-  vim.api.nvim_set_hl(0, "CursorLineNr", {
-    fg = "#e6c384",
-    bg = "NONE",
-    bold = true
-  })
-
-  -- editor cursor line
-  vim.api.nvim_set_hl(0, "CursorLine", { bg = "#252535" })
-
-  -- completion popup
-  vim.api.nvim_set_hl(0, "Pmenu", { bg = "NONE" })
-  vim.api.nvim_set_hl(0, "PmenuSel", { bg = "#252535", bold = true })
-
-  -- floats
-  vim.api.nvim_set_hl(0, "NormalFloat", { bg = "NONE" })
-  vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#6e6e6e", bg = "NONE" })
-
-  -- telescope selection line
-  vim.api.nvim_set_hl(0, "TelescopeSelection", {
-    bg = "#252535"
-  })
-
-  vim.api.nvim_set_hl(0, "TelescopeSelectionCaret", {
-    fg = "#e6c384"
-  })
-
-end
-
--- =========================================================
--- Apply colorscheme
+-- Apply theme
 -- =========================================================
 local function apply_theme()
 
@@ -105,30 +66,21 @@ local function apply_theme()
   if bg == "light" then
     vim.cmd.colorscheme("kanso-pearl")
   else
-    vim.cmd.colorscheme("kanso")
+    vim.cmd.colorscheme("kanso-mist")
   end
 
-  set_transparency()
-  set_cursor_ui()
+  transparent()
 
 end
 
 
--- =========================================================
--- Re-apply highlights after colorscheme reload
--- =========================================================
-vim.api.nvim_create_autocmd("ColorScheme", {
-
-  callback = function()
-
-    set_transparency()
-    set_cursor_ui()
-
-  end
-
-})
-
--- =========================================================
--- Execute
--- =========================================================
+-- run once
 apply_theme()
+
+
+-- reapply transparency after colorscheme
+vim.api.nvim_create_autocmd("ColorScheme", {
+  callback = function()
+    transparent()
+  end,
+})
