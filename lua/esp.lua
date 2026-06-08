@@ -6,14 +6,14 @@ local PORT = "/dev/ttyUSB0"
 -- CHANGE HERE (toggle)
 -- =========================
 
-local BOARD = "esp32cam"
+-- local BOARD = "esp32cam"
 -- local BOARD = "esp32"
--- local BOARD = "esp01"
+local BOARD = "esp01"
 
 
--- for compiling only comand use in terminal
+-- for compiling only use in terminal:
 -- esp --no-upload <name>.ino
--- boards: esp01, esp32, esp32cam
+-- boards: esp01 (esp8266), esp32, esp32cam
 
 -- =========================
 

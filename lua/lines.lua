@@ -122,3 +122,4 @@ require("lualine").setup({
     -- },
   },
 })
+

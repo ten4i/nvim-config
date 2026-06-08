@@ -32,7 +32,6 @@ set fillchars=eob:\
 set timeoutlen=350
 set whichwrap+=<>
 set splitbelow
-
 " FOLDS — MANUAL + SAVE
 set foldenable
 set foldmethod=manual
@@ -139,6 +138,8 @@ Plug 'tpope/vim-dadbod'
 Plug 'kristijanhusak/vim-dadbod-ui'
 Plug 'kristijanhusak/vim-dadbod-completion'
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'kdheepak/lazygit.nvim'
+Plug 'kdheepak/monochrome.nvim'
 call plug#end()
 
 "         HOTKEYS & lua MODULES
@@ -151,8 +152,14 @@ tnoremap <silent> <S-Left>  <C-\><C-n>:BufferPrev<CR>
 tnoremap <silent> <S-Right> <C-\><C-n>:BufferNext<CR>
 nnoremap <S-Down> 8j
 nnoremap <S-Up>   8k
+vnoremap <S-Down> 8j
+vnoremap <S-Up>   8k
 inoremap <S-Down> <C-o>8j
 inoremap <S-Up>   <C-o>8k
+
+"lazygit
+nnoremap <silent> <leader>g :lua require('lazygit').lazygit()<CR>
+
 
 
 " $MYVIMRC
@@ -323,8 +330,8 @@ require("claudecode_setup")
 require("arduino")
 require("esp")
 
-pcall(require, "theme_changer")
 pcall(require, "lines")
+pcall(require, "theme_changer")
 pcall(require, "nvim-dap")
 pcall(require, "signcolumn")
 pcall(require, "macros")
@@ -343,4 +350,12 @@ require("telescope").setup({
 
 require("telescope").load_extension("file_browser")
 EOF
+
+let s:scheme = system("gsettings get org.gnome.desktop.interface color-scheme 2>/dev/null")
+if s:scheme =~# 'prefer-light'
+  set background=light
+else
+  set background=dark
+endif
+colorscheme monochrome
 

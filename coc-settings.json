@@ -1,4 +1,8 @@
 {
   "snippets.ultisnips.pythonPrompt": false,
-  "sql.dialect": "mysql"
+  "sql.dialect": "mysql",
+  "yaml.schemas": {
+    "kubernetes": ["*.yaml", "*.yml"]
+  }
 }
+
